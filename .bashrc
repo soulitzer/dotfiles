@@ -136,3 +136,7 @@ fi
 
 # Fixes TMUX to split in the same directory
 PS1='$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#I") $PWD)${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+
+function cd {
+    builtin cd "$@" && ls -F
+}
