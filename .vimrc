@@ -16,6 +16,7 @@ Plugin 'bling/vim-airline'
 Plugin 'atelierbram/vim-colors_atelier-schemes'
 Plugin 'tpope/vim-fugitive'
 Plugin 'mbbill/undotree'
+Plugin 'Valloric/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -79,8 +80,17 @@ set visualbell
 set ttyfast
 set listchars=tab:▸\ ,eol:¬
 
-if has("persistent_undo")
-    set undodir=~/.vim/.undodir/
+" Put plugins and dictionaries in this dir (also on Windows)
+let vimDir = '$HOME/.vim'
+let &runtimepath.=','.vimDir
+
+" Keep undo history across sessions by storing it in a file
+if has('persistent_undo')
+    let myUndoDir = expand(vimDir . '/undodir')
+    " Create dirs
+    call system('mkdir ' . vimDir)
+    call system('mkdir ' . myUndoDir)
+    let &undodir = myUndoDir
     set undofile
 endif
 
@@ -105,7 +115,6 @@ nnoremap <Tab> za
 nnoremap <leader>h :%s/\v
 nnoremap <leader>q :q<CR>
 nnoremap <leader>w :w<CR>
-nnoremap <leader><leader> :e#<CR>
 
 nnoremap <leader>g :UndotreeToggle<CR>
 nnoremap g= g+
@@ -119,6 +128,6 @@ let &t_SI.="\e[5 q"
 let &t_EI.="\e[1 q"
 let &t_te.="\e[0 q"
 
-
+nnoremap gp `[v`]
 
 
